@@ -61,7 +61,7 @@ class ProductController extends Controller
             $request->photo->move(public_path('images'), $imagename);
             $input['photo'] = $imagename;   
         }
-            Product::create($input);
+            // Product::create($input);
             $product = Product::create($input);
             Mail::to('admin-toko@example.com')->send(new NewProductNotification($product));
             return redirect()->route('products.index')
