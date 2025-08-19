@@ -10,6 +10,8 @@ use Yajra\DataTables\DataTables;
 use PDF;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewProductNotification;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProductController extends Controller
 {
@@ -63,7 +65,8 @@ class ProductController extends Controller
         }
             // Product::create($input);
             $product = Product::create($input);
-            Mail::to('admin-toko@example.com')->send(new NewProductNotification($product));
+            $usersLogin = Auth::user();
+            Mail::to($usersLogin->email)->send(new NewProductNotification($product));
             return redirect()->route('products.index')
                 ->with('success', 'Product created successfully.');
     }
